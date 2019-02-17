@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <algorithm>
 #include <cstdlib>
+#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -12,69 +13,49 @@ using std::endl;
 using std::setw;
 using std::setfill;
 using std::left;
+using std::vector;
 
 int const N = 20;
-
 
 struct student
 {
     std::string FirstName;
     std::string LastName;
-    int n;
-    double *nd = new double[N];
-    
-    int egz;
-    int Med_ar_Vid;
+    int egz, Med_ar_Vid;
+    vector<int> nd;
 
     double Finale_suVidurkiu()
     {
         double s = 0;
-        for (int i=1; i<=n; i++)
+        for (int i=1; i<=nd.size(); i++)
         {
             s = s + nd[i];
         }
-        return 0.4 * s/n + 0.6 * egz;
+        return 0.4 * s/nd.size() + 0.6 * egz;
     }
 
     double Finale_suMediana()
     {
-        Rikiuoti();
+        
+        //sorting an array in ascending order
+	    std::sort(nd.begin(), nd.end());
+
         double s = 0;
-        if (n % 2 == 0)
+        if (nd.size() % 2 == 0)
         {
-            s = (nd[n/2] + nd[n/2 + 1])/2;
+            s = (double)((nd[nd.size()/2] + nd[nd.size()/2])/2);
         }
         else
         {
-            s = nd[n/2 + 1];
+            s =(double)nd[nd.size()/2]; 
+
+
         }
         return 0.4 * s + 0.6 * egz;
     } 
-
-    void Rikiuoti() 
-    {
-        int max, t;
-        for (int i = 0; i<n-1; i++)
-        {
-            max = i;
-            for (int j=i+1; j<n; j++)
-            {
-                if (nd[j] < nd[max])
-                max = j;
-            }
-            t = nd[max];
-            nd[max] = nd[i];
-            nd[i] = t;
-        }  
-    }
 };
 
-void Error()
-{
-    cout <<" Klaida. Iveskite is naujo! " <<endl;
-}
-
-void PrintData(int sk, student A[])
+void PrintData(int &sk, student A[])
 {
     int const num = 17;
 
@@ -91,6 +72,15 @@ void PrintData(int sk, student A[])
         cout << left << setfill(' ')<< setw(num) <<A[i].LastName;
         cout << left << setfill(' ')<< setw(num) <<A[i].FirstName;
         
+        if(A[i].Med_ar_Vid == 2)
+        {
+            cout << std::fixed;
+            cout << left << setfill(' ')<< setw(num) << std::setprecision(2) << A[i].Finale_suVidurkiu();
+            cout << std::fixed;
+            cout << "  ";
+            cout << left << setfill(' ')<< setw(num) << std::setprecision(2) << A[i].Finale_suMediana();
+        }
+
         if(A[i].Med_ar_Vid == 1)
         {
             cout << std::fixed;
@@ -112,19 +102,61 @@ void PrintData(int sk, student A[])
 void Generuoti(student A[], int i)
 {
     std::srand (std::time(NULL));
-    A[i].n = 6;
     for(int j=1; j<=6; j++)
     {
-        A[i].nd[j] = rand() % 10 + 1;
+        A[i].nd.push_back(rand() % 10 + 1);
     }
     A[i].egz = rand() % 10 + 1;
+}
+
+void Error()
+{
+    cout <<" Klaida. Iveskite is naujo! " <<endl;
+    cin.ignore();
+    cin.clear();
+}
+
+
+void SkaitytiFaila(student A[])
+{
+    std::ifstream fd("kursiokai.txt");
+    int i = 1;
+    std::string vardas;
+    while(fd >> vardas)
+    {
+        A[i].FirstName = vardas;
+        fd >> A[i].LastName;
+
+        int temp;
+        for (int i = 1; i <= 5; i++)
+		{
+			fd >> temp;
+			A[i].nd.push_back(temp);
+		}
+        
+        fd >> A[i].egz;
+        A[i].Med_ar_Vid = 2;
+        i++;
+    }
+    fd.close();
 }
 
 
 void InsertData(int &sk, student A[])
 {
-    for(int i=1; i <= sk; i++)
+
+    cout << "Jei norite duomenis sukelti is failo (1), jei ne (0): ";
+    int a;
+    cin >> a;
+    if (a == 1) SkaitytiFaila(A);
+    else
     {
+        int sk;
+        cout << "Iveskite mokiniu skaiciu: ";
+        cin >> sk;
+        cout << endl;
+        for(int i=1; i <= sk; i++)
+        {
         cout << "Iveskite " << i << "-ojo mokinio duomenis" << endl;
         cout << "Vardas: "; 
         cin >> A[i].FirstName;
@@ -139,8 +171,7 @@ void InsertData(int &sk, student A[])
         if (g == 1) Generuoti(A,i);
         else if (g == 0)
         {
-            cout << "Pradekite vesti mokinio pazymius. Kai baigsite spauskite 0. " << endl;
-            A[i].n = 0;
+            cout << "Pradekite vesti mokinio pazymius. Kai baigsite iveskite 0. " << endl;
             int j=1; 
             int ans;
 
@@ -148,13 +179,11 @@ void InsertData(int &sk, student A[])
             {
                 cout << j <<"-uju namu darbu rezultatas: ";
                 cin >> ans;
-
                 if (ans == 0) break;
                 else
                 {
-                    A[i].nd[j] = ans;
+                    A[i].nd.push_back(ans);
                     j++;
-                    A[i].n ++;
                 }
             }
 
@@ -163,22 +192,24 @@ void InsertData(int &sk, student A[])
             cout << endl;
         }
 
-        cout << "Pasirinktite skaiciuoti su mediana (0) arba vidurkiu (1): " << endl;
+        cout << "Pasirinkite skaiciuoti su mediana (0) arba vidurkiu (1): " << endl;
         cin >> A[i].Med_ar_Vid;
         cout << endl;
         cout << endl;
-    }
+        }
+        
+    }    
 }
+
+
 
 int main ()
 {
     int sk;
-    cout << "Iveskite mokiniu skaiciu: ";
-    cin >> sk; cout << endl;
-    
     student A[N];
+    
     InsertData(sk,A);
-    PrintData(sk, A);
+    PrintData(sk,A);
 
     return 0;
 }
