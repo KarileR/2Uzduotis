@@ -59,7 +59,7 @@ struct student
 
 bool Compare_By_FirstName(const student &a, const student &b) 
 {
-    return a.FirstName < b.LastName;
+    return a.FirstName < b.FirstName;
 }
 
 void Sort_By_FirstName(vector<student> &A) 
@@ -81,7 +81,7 @@ int GetLongestString(vector <student> &A)
         ln = i.LastName.size();
         if (ln > max) max = ln;
     }
-    cout << max << endl << endl;
+    //cout << max << endl << endl;
     return max;
 }
 
@@ -167,7 +167,7 @@ void InsertFromFile(vector <student> &A)
 	{
 		cout << "Cannot open the File : "<<endl;
 	}
-    cout << numLines << endl;
+    //cout << numLines << endl;
 
     int inputNd;
     int i=1;

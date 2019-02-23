@@ -1,12 +1,12 @@
-Vardas1     Pavarde1    8    9     10   6    10   9
-Vardas2     Pvarde2	7    10    8    5    4    6
-Ramunas     Kernis      8    6     1    2    4    5
-Vardas2     Pvarde2	7    10    8    5    4    6
-Vardas2     Pvarde2	7    10    8    5    4    6
-Karolina    Pavarde1    8    9     10   6    10   9
-Vardas2     Pvarde2	7    10    8    5    4    6
-Darkaite    Akvile      8    6     1    2    4    5
-Vardas2     Pvarde2	7    10    8    5    4    6
-Vardas1     Pavarde1    8    9     10   6    10   9
-Agne        Pvarde2	4    10    9    5    4    6
+Vardas      Pavarde1    8    9     10   6    10   9
+Vardas      Pvarde2	7    10    8    5    4    6
+Aidas       Pavarde3    8    6     1    2    4    5
+Martynas    Pvarde4	7    10    8    5    4    6
+Vardas      Pvarde5	7    10    8    5    4    6
+Karolina    Pavarde6    8    9     10   6    10   9
+Vardas      Pvarde7	7    10    8    5    4    6
+Akvile      Pavarde8    8    6     1    2    4    5
+Vardas      Pvarde9	7    10    8    5    4    6
+Vardas      Pavarde10   8    9     10   6    10   10
+Agne        Pavarde11	4    10    9    5    4    6
 
