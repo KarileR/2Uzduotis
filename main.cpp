@@ -6,6 +6,9 @@
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
+#include <sstream>
+#include <cstring>
+#include <limits>
 
 using std::cout;
 using std::cin;
@@ -27,18 +30,18 @@ struct student
     double Finale_suVidurkiu()
     {
         double s = 0;
-        for (int i=1; i<=nd.size(); i++)
+        for (int i=0; i<nd.size(); i++)
         {
             s = s + nd[i];
         }
-        return 0.4 * s/nd.size() + 0.6 * egz;
+        double avr = s/nd.size();
+        return 0.4 * avr + 0.6 * egz;
     }
 
     double Finale_suMediana()
     {
         
-        //sorting an array in ascending order
-	    std::sort(nd.begin(), nd.end());
+	    std::sort(nd.begin(), nd.end());  //sorting an array in ascending order
 
         double s = 0;
         if (nd.size() % 2 == 0)
@@ -48,168 +51,249 @@ struct student
         else
         {
             s =(double)nd[nd.size()/2]; 
-
-
         }
         return 0.4 * s + 0.6 * egz;
     } 
 };
 
-void PrintData(int &sk, student A[])
-{
-    int const num = 17;
 
+bool Compare_By_FirstName(const student &a, const student &b) 
+{
+    return a.FirstName < b.LastName;
+}
+
+void Sort_By_FirstName(vector<student> &A) 
+{
+    std::sort(A.begin(), A.end(), Compare_By_FirstName);
+}
+
+
+int GetLongestString(vector <student> &A) 
+{
+    int ln=0, max=0;
+    for(auto &i: A)
+    {
+        ln = i.FirstName.size();
+        if (ln > max) max = ln;
+    }
+    for(auto &i: A)
+    {
+        ln = i.LastName.size();
+        if (ln > max) max = ln;
+    }
+    cout << max << endl << endl;
+    return max;
+}
+
+void PrintData(vector <student> &A)
+{
+    int num = 0;
+    int const num2 = 20;
+    num = GetLongestString(A) + 7;
+
+    
+    Sort_By_FirstName(A);
+
+    cout << endl;
     cout<< left << setfill(' ') << setw(num) << "Pavarde";
     cout<< left << setfill(' ') << setw(num) << "Vardas";
-    cout<< left << setfill(' ') << setw(num) << "Galutinis (Vid.)";
-    cout<< left << setfill(' ') << setw(num) << "/ Galutinis (Med.)" << endl;
+    cout<< left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
+    cout<< left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
 
-    const std::string bruksnys(num*4,'_');
+    
+    const std::string bruksnys(num+num+20+17,'_');
     cout<<bruksnys<<endl;
 
-    for(int i=1; i<=sk; i++)
+    for(auto &i: A)
     {
-        cout << left << setfill(' ')<< setw(num) <<A[i].LastName;
-        cout << left << setfill(' ')<< setw(num) <<A[i].FirstName;
+        cout << left << setfill(' ')<< setw(num) << i.LastName;
+        cout << left << setfill(' ')<< setw(num) << i.FirstName;
         
-        if(A[i].Med_ar_Vid == 2)
+        if(i.Med_ar_Vid == 2)  //Spausdina ir ta, ir ta
         {
             cout << std::fixed;
-            cout << left << setfill(' ')<< setw(num) << std::setprecision(2) << A[i].Finale_suVidurkiu();
-            cout << std::fixed;
-            cout << "  ";
-            cout << left << setfill(' ')<< setw(num) << std::setprecision(2) << A[i].Finale_suMediana();
+            cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
+            cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
         }
 
-        if(A[i].Med_ar_Vid == 1)
+        if(i.Med_ar_Vid == 1) //Spausdina tik su vidurkiu
         {
             cout << std::fixed;
-            cout << left << setfill(' ')<< setw(num) << std::setprecision(2) << A[i].Finale_suVidurkiu();
+            cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
         }
 
-        cout << left << setfill(' ')<< setw(num) << " ";
-
-        if(A[i].Med_ar_Vid == 0)
+        if (i.Med_ar_Vid == 0) //Spausdina tik su mediana
         {
-            cout << std::fixed;
-            cout << "  ";
-            cout << left << setfill(' ')<< setw(num) << std::setprecision(2) << A[i].Finale_suMediana();
+            cout << "                    ";
+            cout << left << setfill(' ')<< setw(num2);
+            cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
         }
         cout << endl;
     }
 }
 
-void Generuoti(student A[], int i)
+void Generuoti(vector <student> &A, student &z)
 {
     std::srand (std::time(NULL));
     for(int j=1; j<=6; j++)
     {
-        A[i].nd.push_back(rand() % 10 + 1);
+        z.nd.push_back(rand() % 10 + 1);
     }
-    A[i].egz = rand() % 10 + 1;
+    z.egz = rand() % 10 + 1;
 }
 
-void Error()
+int CountLines(int &numLines)
 {
-    cout <<" Klaida. Iveskite is naujo! " <<endl;
-    cin.ignore();
-    cin.clear();
+    std::ifstream in("kursiokai.txt");
+
+    while ( in.good() )
+    {
+        std::string line;
+        std::getline(in, line);
+        ++numLines;
+    }
+    in.close();
+
+    return numLines;
 }
 
-
-void SkaitytiFaila(student A[])
+void InsertFromFile(vector <student> &A)
 {
     std::ifstream fd("kursiokai.txt");
-    int i = 1;
-    std::string vardas;
-    while(fd >> vardas)
-    {
-        A[i].FirstName = vardas;
-        fd >> A[i].LastName;
 
-        int temp;
-        for (int i = 1; i <= 5; i++)
-		{
-			fd >> temp;
-			A[i].nd.push_back(temp);
-		}
-        
-        fd >> A[i].egz;
-        A[i].Med_ar_Vid = 2;
+    int numLines;
+    CountLines(numLines);
+    if(!fd)
+	{
+		cout << "Cannot open the File : "<<endl;
+	}
+    cout << numLines << endl;
+
+    int inputNd;
+    int i=1;
+    student z;
+    
+    while(i<=numLines) 
+    {
+        z.nd.clear();
+        fd >> z.FirstName;
+        fd >> z.LastName;
+
+        for (int j=1; j<=5; j++)
+        {
+            fd >> inputNd;
+            z.nd.push_back(inputNd);
+        }
+        fd >> z.egz;
+        z.Med_ar_Vid = 2;
         i++;
+        A.push_back(z);
     }
+   
     fd.close();
 }
 
-
-void InsertData(int &sk, student A[])
+void CinAndCheck(auto *a)
 {
-
-    cout << "Jei norite duomenis sukelti is failo (1), jei ne (0): ";
-    int a;
-    cin >> a;
-    if (a == 1) SkaitytiFaila(A);
-    else
+    cin >> *a;
+    do
     {
-        int sk;
-        cout << "Iveskite mokiniu skaiciu: ";
-        cin >> sk;
-        cout << endl;
-        for(int i=1; i <= sk; i++)
+        try 
         {
-        cout << "Iveskite " << i << "-ojo mokinio duomenis" << endl;
-        cout << "Vardas: "; 
-        cin >> A[i].FirstName;
-        cout << "Pavarde: ";
-        cin >> A[i].LastName;
-        cout << endl;
-        
-        int g;
-        cout << "Pasirinkti generuoti pazymius atsitiktinai (1) arba ivesti paciam (0): ";
-        cin >> g;
-
-        if (g == 1) Generuoti(A,i);
-        else if (g == 0)
-        {
-            cout << "Pradekite vesti mokinio pazymius. Kai baigsite iveskite 0. " << endl;
-            int j=1; 
-            int ans;
-
-            while(true)
+            if (cin.fail()) 
             {
-                cout << j <<"-uju namu darbu rezultatas: ";
-                cin >> ans;
-                if (ans == 0) break;
-                else
-                {
-                    A[i].nd.push_back(ans);
-                    j++;
-                }
+                throw std::runtime_error("Error, iveskite dar karta: ");
             }
-
-            cout << "Egzamino rezultatai: ";
-            cin >> A[i].egz;
-            cout << endl;
+        }
+        catch (const std::runtime_error& e)
+        {
+            cout << e.what();
+            cin.clear();
+            cin.ignore(256, '\n');
+            *a = -100;
         }
 
-        cout << "Pasirinkite skaiciuoti su mediana (0) arba vidurkiu (1): " << endl;
-        cin >> A[i].Med_ar_Vid;
-        cout << endl;
-        cout << endl;
-        }
-        
-    }    
+    }while(cin.fail());
 }
 
 
+void InsertData(vector <student> &A)
+{
+    cout << "Jei norite sukelti duomenis is failo spauskite 1, jei ne - 0: ";
+    int a;
+    cin >> a;
+
+    int sk=0;
+
+    if (a == 1)
+    {
+        InsertFromFile(A);        
+    }
+    else if (a == 0)
+    {
+        cout << "Iveskite mokiniu skaiciu: ";
+        cin >> sk;
+
+        cout << endl;
+
+        student z;
+
+        for(int i=1; i <= sk; i++)
+        {
+            z.nd.clear();
+            cout << "Iveskite " << i << "-ojo mokinio duomenis" << endl;
+            cout << "Vardas: "; 
+            
+            cin >> z.FirstName;
+            cout << "Pavarde: ";
+            cin >> z.LastName;
+            cout << endl;
+            
+            int g;
+            cout << "Pasirinkti generuoti pazymius atsitiktinai (1) arba ivesti paciam (0): ";
+            cin >> g; 
+           
+
+            if (g == 1) Generuoti(A,z);
+            else if (g == 0)
+            {
+                cout << "Pradekite vesti mokinio pazymius. Kai baigsite iveskite 0. " << endl;
+                int j=1;
+                int ans;
+
+                while(true)
+                {
+                    cout << j <<"-uju namu darbu rezultatas: ";
+                    cin >> ans;
+
+                    if (ans == 0) break;
+                    else
+                    {
+                        z.nd.push_back(ans);
+                        j++;
+                    }
+                }
+
+                cout << "Egzamino rezultatai: ";
+                cin >> z.egz;
+                cout << endl;
+            }
+
+            cout << "Pasirinkite skaiciuoti su mediana (0), vidurkiu (1), arba su abiem (2): ";
+            cin >> z.Med_ar_Vid;
+            cout << endl;
+            cout << endl;
+            A.push_back(z);
+        }
+    }
+}
 
 int main ()
 {
-    int sk;
-    student A[N];
+    vector <student> A;
     
-    InsertData(sk,A);
-    PrintData(sk,A);
+    InsertData(A);
+    PrintData(A);
 
     return 0;
 }
