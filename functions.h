@@ -50,16 +50,4 @@ int GetLongestString(vector <student> &A);
 int InputInteger(int choose);
 void PrintData(vector <student> &A);
 
-
-
-
-
-
-
-
-
-
-
-
-
 #endif
