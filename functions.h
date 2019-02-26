@@ -42,12 +42,13 @@ struct student
 
 bool Compare_By_FirstName(const student &a, const student &b);
 void Sort_By_FirstName(vector<student> &A);
-void InsertData(vector <student> &A);
+void MENU(vector <student> &A, vector <vector <student>> &AA);
 int Choose(int choose);
 void InsertFromFile(vector <student> &A);
-void Generuoti(vector <student> &A, student &z);
 int GetLongestString(vector <student> &A);
 int InputInteger(int choose);
 void PrintData(vector <student> &A);
+void GenerateList(vector <vector <student>> &AA);
+void PrintData_From_Gen_List(vector <vector <student>> &AA);
 
 #endif

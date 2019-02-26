@@ -4,9 +4,10 @@
 int main ()
 {
     vector <student> A;
+    vector <vector <student>> AA;
     
-    InsertData(A);
-    PrintData(A);
+    MENU(A, AA);
+
 
     return 0;
 }
