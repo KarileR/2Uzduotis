@@ -1,0 +1,5 @@
+Pavarde        Vardas         ND1  ND2  ND3  ND4  ND5  EGZ    Galutinis (Vid.)    Galutinis (Med.)    
+Pavarde4       Vardas4        2    5    7    9    9    4      4.96                5.20                
+Pavarde3       Vardas3        4    8    8    10   10   2      4.40                4.40                
+Pavarde2       Vardas2        2    3    3    6    10   3      3.72                3.00                
+
