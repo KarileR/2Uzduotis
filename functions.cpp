@@ -1,168 +1,6 @@
 #include "functions.h"
 #include "libraries.h"
 
-bool Compare_By_FirstName(const student &a, const student &b) 
-{
-    return a.FirstName < b.FirstName;
-}
-
-void Sort_By_FirstName(vector<student> &A) 
-{
-    std::sort(A.begin(), A.end(), Compare_By_FirstName);
-}
-
-void PrintData(vector <student> &A)
-{
-        int num = 0;
-        int num2 = 20;
-        num = GetLongestString(A) + 7;
-
-        Sort_By_FirstName(A);
-
-        cout << endl;
-        cout<< left << setfill(' ') << setw(num) << "Pavarde";
-        cout<< left << setfill(' ') << setw(num) << "Vardas";
-        cout<< left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
-        cout<< left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
-        
-        const std::string bruksnys(num+num+20+17,'_');
-        cout<<bruksnys<<endl;
-        for(auto &i: A)
-        {
-            cout << left << setfill(' ')<< setw(num) << i.LastName;
-            cout << left << setfill(' ')<< setw(num) << i.FirstName;
-
-            if (i.CorrectData == true)
-            {
-                if(i.Med_ar_Vid == 3)  //Spausdina ir ta, ir ta
-                {
-                    cout << std::fixed;
-                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
-                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
-                }
-
-                else if(i.Med_ar_Vid == 2) //Spausdina tik su vidurkiu
-                {
-                    cout << std::fixed;
-                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
-                }
-
-                else if (i.Med_ar_Vid == 1) //Spausdina tik su mediana
-                {
-                    cout << std::fixed;
-                    cout << "                    ";
-                    cout << left << setfill(' ')<< setw(num2);
-                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
-                }
-            }
-
-            else if (i.CorrectData == false)
-            {
-                cout << left << setfill(' ')<< setw(num2) << "Wrong Data";
-                cout << left << setfill(' ')<< setw(num2) << "Wrong data";
-            }
-            cout << endl;
-        }
-}
-
-
-void PrintData_From_Gen_List(vector <vector <student>> &AA)
-{
-    std::ofstream write("temp.txt"); 
-    int fileNR = 1;
-    for(int i=0; i< AA.size(); i++)
-        {
-            std::string sk = std::to_string(fileNR);
-
-            std::string file = "GeneratedLists/List" + sk + "/list.txt";
-            fileNR++;
-
-            std::ofstream write(file);
-        
-            int num = 15;
-            int num2 = 20;
-            int num3 = 5;
-            //num = GetLongestString(A) + 7;
-
-            write << left << setfill(' ') << setw(num) << "Pavarde";
-            write << left << setfill(' ') << setw(num) << "Vardas";
-            write << left << setfill(' ') << setw(num3) << "ND1";
-            write << left << setfill(' ') << setw(num3) << "ND2";
-            write << left << setfill(' ') << setw(num3) << "ND3";
-            write << left << setfill(' ') << setw(num3) << "ND4";
-            write << left << setfill(' ') << setw(num3) << "ND5";
-            write << left << setfill(' ') << setw(7) << "EGZ";
-            write << left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
-            write << left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
-
-            const std::string bruksnys(num*4+num3*5+14,'_');
-            write << bruksnys << endl;
-
-            for(int h=0; h < AA[i].size(); h++)
-            {
-                write << left << setfill(' ')<< setw(num) << AA[i][h].LastName;
-                write << left << setfill(' ')<< setw(num) << AA[i][h].FirstName;
-                for (int j=0; j<5; j++)
-                {
-                    write << left << setfill(' ') << setw(num3) << AA[i][h].nd[j];
-                }
-                write << std::fixed;
-                write << left << setfill(' ') << setw(7) <<AA[i][h].egz;
-                write << left << setfill(' ')<< setw(num2) << std::setprecision(2) << AA[i][h].Finale_suVidurkiu();
-                write << left << setfill(' ')<< setw(num2) << std::setprecision(2) << AA[i][h].Finale_suMediana();
-                write << endl;  
-            }
-            write << endl;
-            write.close();
-        }
-}
-
-
-void GenerateList(vector <vector <student>> &AA)
-{
-    std::srand (std::time(NULL));
-    int num = 10;
-    for (int k=0; k<5; k++)
-    {
-        vector<student> a;
-        student z;
-        for(int i=0; i<num; i++)
-        {
-            z.nd.clear();
-            std::string sk = std::to_string(i+1);
-
-            std::string vardas = "Vardas" + sk;
-            std::string pavarde = "Pavarde" + sk;
-
-            z.FirstName = vardas;
-            z.LastName = pavarde;
-
-            for(int j=0; j<5; j++)
-            {
-                z.nd.push_back(rand() % 10 + 1);
-            }
-            z.egz = rand() % 10 + 1;
-            a.push_back(z);
-        }
-        num = num * 10;
-        AA.push_back(a);
-    }
-
-}
-
-
-
-void Sort_by_Grades(vector <vector <student>> &AA)
-{
-    for(int i=0; i<10; i++)
-    {
-        
-    }
-
-}
-
-
-
 void InsertYourself(vector <student> &A)
 {
     cout << "Iveskite mokiniu skaiciu: ";
@@ -211,86 +49,207 @@ void InsertYourself(vector <student> &A)
 
 }
 
-void MENU(vector <student> &A, vector <vector <student>> &AA)
+void PrintData(vector <student> A)
 {
-    cout << endl;
-    cout << "Paspausti atitinkamus skaicius, jeigu norite:" << endl << endl;
-    cout << "1. Sukelti duomenis is esamo failo" << endl;
-    cout << "2. Generuoti atsitiktinius 5 sarasus" << endl; 
-    cout << "3. Ivesti duomenis ranka" << endl << endl;
-    cout << "Jusu pasirinkimas: ";
-    int a = Choose(3);
+        int num = 0;
+        int num2 = 20;
+        num = GetLongestString(A) + 7;
 
-    if (a == 1) 
-    {
-        InsertFromFile(A); 
-        PrintData(A);
-    }       
-    else if (a == 2) 
-    {
-        GenerateList(AA);
-        PrintData_From_Gen_List(AA);
-        Sort_by_Grades(AA);
-    }
-    else if (a == 3)
-    {
-        InsertYourself(A);
-        PrintData(A);
-    } 
+        Sort_by_FirstName(A);
+       
+        cout << endl;
+        cout<< left << setfill(' ') << setw(num) << "Pavarde";
+        cout<< left << setfill(' ') << setw(num) << "Vardas";
+        cout<< left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
+        cout<< left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
+        
+        const std::string bruksnys(num+num+20+17,'_');
+        cout<<bruksnys<<endl;
+        for(auto &i: A)
+        {
+            cout << left << setfill(' ')<< setw(num) << i.LastName;
+            cout << left << setfill(' ')<< setw(num) << i.FirstName;
+
+            if (i.CorrectData == true)
+            {
+                if(i.Med_ar_Vid == 3)  //Spausdina ir ta, ir ta
+                {
+                    cout << std::fixed;
+                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
+                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+                }
+
+                else if(i.Med_ar_Vid == 2) //Spausdina tik su vidurkiu
+                {
+                    cout << std::fixed;
+                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
+                }
+
+                else if (i.Med_ar_Vid == 1) //Spausdina tik su mediana
+                {
+                    cout << std::fixed;
+                    cout << "                    ";
+                    cout << left << setfill(' ')<< setw(num2);
+                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+                }
+            }
+
+            else if (i.CorrectData == false)
+            {
+                cout << left << setfill(' ')<< setw(num2) << "Wrong Data";
+                cout << left << setfill(' ')<< setw(num2) << "Wrong data";
+            }
+            cout << endl;
+        }
 }
 
-int Choose(int choose)  //Inputs and validates integer (user's choice)
+void Print_Gen_List(vector <student> &A)
 {
-    if (choose == 2)
+    
+    std::ofstream write("GeneratedLists/List2/Full_list.txt");
+    
+    int num = 15;
+    int num2 = 20;
+    int num3 = 5;
+
+    write << left << setfill(' ') << setw(num) << "Pavarde";
+    write << left << setfill(' ') << setw(num) << "Vardas";
+    write << left << setfill(' ') << setw(num3) << "ND1";
+    write << left << setfill(' ') << setw(num3) << "ND2";
+    write << left << setfill(' ') << setw(num3) << "ND3";
+    write << left << setfill(' ') << setw(num3) << "ND4";
+    write << left << setfill(' ') << setw(num3) << "ND5";
+    write << left << setfill(' ') << setw(7) << "EGZ";
+    write << left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
+    write << left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
+
+    const std::string bruksnys(num*4+num3*5+14,'_');
+    write << bruksnys << endl;
+
+    for(auto &i : A)
     {
-        int a;
-        cin >> a;
-        while (true)
+        write << left << setfill(' ')<< setw(num) << i.LastName;
+        write << left << setfill(' ')<< setw(num) << i.FirstName;
+        for (int j=0; j<5; j++)
         {
-            if (a == 2 || a == 1) break;
-            do
-            {
-                try
-                {
-                    if (std::cin.fail()) throw std::runtime_error("Input is not an integer\n");
-                }
-                catch (...)
-                {
-                        cin.clear();
-                        cin.ignore(256, '\n');
-                }
-                cout << "Iveskite dar karta: ";
-                cin >> a;
-            }while(std::cin.fail());
+             write << left << setfill(' ') << setw(num3) << i.nd[j];
         }
-        return a;
+        write << std::fixed;
+        write << left << setfill(' ') << setw(7) <<i.egz;
+        write << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
+        write << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+        write << endl;  
+    }
+    write << endl;
+    write.close();
+}
+
+void GroupStudents(vector <student> &A)
+{
+    for(auto &i : A)
+    {
+        if (i.Finale_suVidurkiu() >= 5) i.Group = true;
+        else i.Group = false;
     }
 
-    else if (choose == 3)
+    Sort_by_Results(A);
+
+    std::ofstream write1("GeneratedLists/List2/kietiakai.txt");
+    std::ofstream write2("GeneratedLists/List2/vargsiukai.txt");
+  
+    int num = 15;
+    int num2 = 20;
+    int num3 = 5;
+    
+    write1 << left << setfill(' ') << setw(num) << "Pavarde";
+    write1 << left << setfill(' ') << setw(num) << "Vardas";
+    write1 << left << setfill(' ') << setw(num3) << "ND1";
+    write1 << left << setfill(' ') << setw(num3) << "ND2";
+    write1 << left << setfill(' ') << setw(num3) << "ND3";
+    write1 << left << setfill(' ') << setw(num3) << "ND4";
+    write1 << left << setfill(' ') << setw(num3) << "ND5";
+    write1 << left << setfill(' ') << setw(7) << "EGZ";
+    write1 << left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
+    write1 << left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
+
+    write2 << left << setfill(' ') << setw(num) << "Pavarde";
+    write2 << left << setfill(' ') << setw(num) << "Vardas";
+    write2 << left << setfill(' ') << setw(num3) << "ND1";
+    write2 << left << setfill(' ') << setw(num3) << "ND2";
+    write2 << left << setfill(' ') << setw(num3) << "ND3";
+    write2 << left << setfill(' ') << setw(num3) << "ND4";
+    write2 << left << setfill(' ') << setw(num3) << "ND5";
+    write2 << left << setfill(' ') << setw(7) << "EGZ";
+    write2 << left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
+    write2 << left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
+
+    const std::string bruksnys(num*4+num3*5+14,'_');
+    write1 << bruksnys << endl;
+
+    for(auto &i : A)
     {
-        int a;
-        cin >> a;
-        while (true)
+        if (i.Group == true)
         {
-            if (a == 1 || a == 2 || a == 3) break;
-            do
+            write1 << left << setfill(' ')<< setw(num) << i.LastName;
+            write1 << left << setfill(' ')<< setw(num) << i.FirstName;
+            for (int j=0; j<5; j++)
             {
-                try
-                {
-                    if (std::cin.fail()) throw std::runtime_error("Input is not an integer\n");
-                }
-                catch (...)
-                {
-                        cin.clear();
-                        cin.ignore(256, '\n');
-                }
-                cout << "Iveskite dar karta: ";
-                cin >> a;
-            }while(std::cin.fail());
+                write1 << left << setfill(' ') << setw(num3) << i.nd[j];
+            }
+            write1 << std::fixed;
+            write1 << left << setfill(' ') << setw(7) <<i.egz;
+            write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
+            write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+            write1 << endl; 
         }
-        return a;
+        else if (i.Group == false)
+        {
+            write2 << left << setfill(' ')<< setw(num) << i.LastName;
+            write2 << left << setfill(' ')<< setw(num) << i.FirstName;
+            for (int j=0; j<5; j++)
+            {
+                write2 << left << setfill(' ') << setw(num3) << i.nd[j];
+            }
+            write2 << std::fixed;
+            write2 << left << setfill(' ') << setw(7) <<i.egz;
+            write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
+            write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+            write2 << endl; 
+        }
+    }
+    write1 << endl;
+    write2 << endl;
+    write1.close();
+    write2.close();
+}
+
+void GenerateList(vector <student> &A)
+{
+    std::srand (std::time(NULL));
+    int num = 100;
+
+    student z;
+    for(int i=0; i<num; i++)
+    {
+        z.nd.clear();
+        std::string sk = std::to_string(i+1);
+
+        std::string vardas = "Vardas" + sk;
+        std::string pavarde = "Pavarde" + sk;
+
+        z.FirstName = vardas;
+        z.LastName = pavarde;
+
+        for(int j=0; j<5; j++)
+        {
+            z.nd.push_back(rand() % 10 + 1);
+        }
+        
+        z.egz = rand() % 10 + 1;
+        A.push_back(z);
     }
 }
+
 
 void InsertFromFile(vector <student> &A)
 {
@@ -349,76 +308,5 @@ void InsertFromFile(vector <student> &A)
     read.close();
 }
 
-int GetLongestString(vector <student> &A) 
-{
-    int ln=0, max=0;
-    for(auto &i: A)
-    {
-        ln = i.FirstName.size();
-        if (ln > max) max = ln;
-    }
-    for(auto &i: A)
-    {
-        ln = i.LastName.size();
-        if (ln > max) max = ln;
-    }
-    return max;
-}
-
-int InputInteger(int choose) //Inputs and validates integer
-{
-
-    if (choose == 1)   //Turi buti ivedamas teigiamas skaicius
-    {
-        int a;
-        cin >> a;
-        while (true)
-        {
-            if (a > 0) break;
-            do
-            {
-                try
-                {
-                    if (std::cin.fail()) throw std::runtime_error("Input is not an integer\n");
-
-                }
-                catch (...)
-                {
-                        cin.clear();
-                        cin.ignore(256, '\n');
-                }
-                cout << "Iveskite dar karta: ";
-                cin >> a;
-            }while(std::cin.fail());
-        }
-        return a;
-    }
-
-    if (choose == 2) //Turi buti ivedamas skaicius tarp 1 ir 10
-    {
-        int a;
-        cin >> a;
-        while (true)
-        {
-            if (a >= 0 && a < 10) break;
-            do
-            {
-                try
-                {
-                    if (std::cin.fail()) throw std::runtime_error("Input is not an integer\n");
-
-                }
-                catch (...)
-                {
-                        cin.clear();
-                        cin.ignore(256, '\n');
-                }
-                cout << "Iveskite dar karta: ";
-                cin >> a;
-            }while(std::cin.fail());
-        }
-        return a;
-    }
-}
 
 

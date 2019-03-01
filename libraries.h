@@ -12,6 +12,9 @@
 #include <sstream>
 #include <cstring>
 #include <limits>
+#include <ctime>
+#include <ratio>
+#include <chrono>
 
 using std::cout;
 using std::cin;
@@ -20,5 +23,9 @@ using std::setw;
 using std::setfill;
 using std::left;
 using std::vector;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration;
+using std::chrono::duration_cast;
+using std::chrono::time_point;
 
 #endif
