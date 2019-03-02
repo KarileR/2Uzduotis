@@ -1,5 +1,5 @@
-1 saraso generavimo programos laikas: 1.188160 s
-2 saraso generavimo programos laikas: 1.212679 s
-3 saraso generavimo programos laikas: 1.221284 s
-4 saraso generavimo programos laikas: 1.867406 s
-5 saraso generavimo programos laikas: 14.493555 s
+1 saraso generavimo programos laikas: 1.130982 s
+2 saraso generavimo programos laikas: 1.210131 s
+3 saraso generavimo programos laikas: 1.224044 s
+4 saraso generavimo programos laikas: 1.640982 s
+5 saraso generavimo programos laikas: 13.275929 s
