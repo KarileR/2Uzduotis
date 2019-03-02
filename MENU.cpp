@@ -23,8 +23,8 @@ void MENU(int &MainChoice, vector <student> &A, high_resolution_clock::time_poin
     }       
     else if (MainChoice == 2) 
     {
-        GenerateList(A);
-        Print_Gen_List(A);
+        GenerateList();
+        ReadFromFile(A);
         GroupStudents(A);
     }
     else if (MainChoice == 3)

@@ -29,8 +29,9 @@ void Time(int &MainChoice, high_resolution_clock::time_point t1, high_resolution
     
     if (MainChoice == 2)
     {
-        //std::ofstream of("GeneratedLists/List2/time.txt");
-        //of << std::fixed << std::setprecision(6) << time1.count() - time2.count() << " s" << endl;
+        std::ofstream of("GeneratedLists/List2/time.txt");
+        of << std::fixed << std::setprecision(6) << time1.count() - time2.count() << " s" << endl;
+        cout << "Sugeneruoti failai issaugoti: GeneratedLists/List2/time.txt ";
     }
     else if(MainChoice == 1)
     {

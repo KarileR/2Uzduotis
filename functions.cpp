@@ -46,13 +46,11 @@ void InsertYourself(vector <student> &A)
             cout << endl;
             A.push_back(z);
         }
-
 }
 
 void PrintData(vector <student> A)
 {
-        int num = 0;
-        int num2 = 20;
+        int num = 0; int num2 = 20; bool co = true;
         num = GetLongestString(A) + 7;
 
         Sort_by_FirstName(A);
@@ -98,15 +96,18 @@ void PrintData(vector <student> A)
             {
                 cout << left << setfill(' ')<< setw(num2) << "Wrong Data";
                 cout << left << setfill(' ')<< setw(num2) << "Wrong data";
+                co = false;
             }
             cout << endl;
         }
+        cout << endl << endl;
+        if (co == false) cout <<"It seems you have written wrong data. Please check again your data file" << endl;
 }
 
-void Print_Gen_List(vector <student> &A)
+void PrintData_toFile(vector <student> &A)
 {
     
-    std::ofstream write("GeneratedLists/List2/Full_list.txt");
+    std::ofstream write("GeneratedLists/List2/temp.txt");
     
     int num = 15;
     int num2 = 20;
@@ -135,12 +136,11 @@ void Print_Gen_List(vector <student> &A)
              write << left << setfill(' ') << setw(num3) << i.nd[j];
         }
         write << std::fixed;
-        write << left << setfill(' ') << setw(7) <<i.egz;
+        write << left << setfill(' ') << setw(7) << i.egz;
         write << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
         write << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
         write << endl;  
     }
-    write << endl;
     write.close();
 }
 
@@ -185,6 +185,7 @@ void GroupStudents(vector <student> &A)
 
     const std::string bruksnys(num*4+num3*5+14,'_');
     write1 << bruksnys << endl;
+    write2 << bruksnys << endl;
 
     for(auto &i : A)
     {
@@ -217,37 +218,88 @@ void GroupStudents(vector <student> &A)
             write2 << endl; 
         }
     }
-    write1 << endl;
-    write2 << endl;
     write1.close();
     write2.close();
 }
 
-void GenerateList(vector <student> &A)
-{
-    std::srand (std::time(NULL));
-    int num = 100;
 
+void ReadFromFile(vector <student> &A)
+{
+    std::ifstream read("GeneratedLists/List2/Full_list.txt");
+
+    if(!read)
+	{
+		cout << "Cannot open the File!"<< endl;
+	}
+
+    read.ignore(std::numeric_limits<std::streamsize>::max(), read.widen('\n'));
+    read.ignore(std::numeric_limits<std::streamsize>::max(), read.widen('\n'));
+
+    int inputNd;
     student z;
-    for(int i=0; i<num; i++)
+    while(!read.eof())
     {
         z.nd.clear();
+        read >> z.FirstName;
+        read >> z.LastName;
+
+        for (int j=1; j<=5; j++)
+        {
+            read >> inputNd;
+            z.nd.push_back(inputNd);
+        }
+        read >> z.egz;
+        z.Med_ar_Vid = 3;
+        A.push_back(z);
+    }
+    A.pop_back();
+    read.close();
+}
+
+
+void GenerateList()
+{
+    std::srand (std::time(NULL));
+    int NR = 100;
+
+    std::ofstream write("GeneratedLists/List2/Full_list.txt");
+    
+    int num = 15; int num2 = 20; int num3 = 5;
+
+    write << left << setfill(' ') << setw(num) << "Pavarde";
+    write << left << setfill(' ') << setw(num) << "Vardas";
+    write << left << setfill(' ') << setw(num3) << "ND1";
+    write << left << setfill(' ') << setw(num3) << "ND2";
+    write << left << setfill(' ') << setw(num3) << "ND3";
+    write << left << setfill(' ') << setw(num3) << "ND4";
+    write << left << setfill(' ') << setw(num3) << "ND5";
+    write << left << setfill(' ') << setw(8) << "EGZ" << endl;
+    //write << left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
+    //write << left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
+     
+    const std::string bruksnys(num*2+num3*5+3.5,'_');
+    write << bruksnys;
+
+    for(int i=0; i<NR; i++)
+    {  
+        write << endl;
         std::string sk = std::to_string(i+1);
 
         std::string vardas = "Vardas" + sk;
         std::string pavarde = "Pavarde" + sk;
 
-        z.FirstName = vardas;
-        z.LastName = pavarde;
+        write << left << setfill(' ')<< setw(num) << vardas;
+        write << left << setfill(' ')<< setw(num) << pavarde;
 
         for(int j=0; j<5; j++)
         {
-            z.nd.push_back(rand() % 10 + 1);
+            write << left << setfill(' ') << setw(num3) << rand() % 10 + 1;
         }
-        
-        z.egz = rand() % 10 + 1;
-        A.push_back(z);
+
+        write << std::fixed;
+        write << left << setfill(' ') << setw(8) << rand() % 10 + 1;
     }
+    write.close();
 }
 
 
@@ -257,7 +309,7 @@ void InsertFromFile(vector <student> &A)
      
     if(!read)
 	{
-		cout << "Cannot open the File! Make sure that your file is in 'data' folder "<< endl;
+		cout << "Cannot open the File! Make sure that your file is in 'data' folder and is named „kursiokai.txt“ "<< endl;
 	}
 
     int inputNd;
