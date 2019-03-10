@@ -2,16 +2,15 @@
 
 # v0.5
  
+__Prideta:__
+- Ismatuotas konteineriu laikas
 
-__Koreguota__
+__Koreguota:__
 - Pakeistas studentu rusiavimo procesas. Dabar rusiuojama i du atskirus vektorius ir jie isvedami atskirai i failus
 - Pakeistas std::vector i std::list, del greitesnio programos veikimo
 - Naudojant std::deque skaiciuojant 100 000 studentu programa uzlusta, bet skaiciuojant mazesnius veikia
 
-__Prideta__
-- Ismatuotas konteineriu laikas
-
-__Spartos analize__
+__Spartos analize:__
 
 | Konteineris | std::vector <>  | std::list <> | std::deque <> |
 | --- | --- | --- | --- |
@@ -31,11 +30,11 @@ __Pridėta:__
 - Programos spartos analizė, keičiant generuojamo sąrašo dydį (GeneratedLists/All_times.txt)
 - Studentai dviejuose naujuose isvestuose failuose surusiuoti pagal galutini vidurki mazejimo tvarka
 
-__Koreguota__
+__Koreguota:__
 - Pilnai veikia visas Exception Handling, tiek skaitant iš failo, tiek įvedant duomenis ranka.
 - Duomenu failas kursiokai.txt padarytas specialiai klaidingas, butent patikrinti, kaip programa veikia, kai ivedami ne reikiami duomenys
 
-__Analize__
+__Spartos analize:__
 
 | Studentu kiekis | Programos laikas  | 
 | --- | --- |
