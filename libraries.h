@@ -15,6 +15,9 @@
 #include <ctime>
 #include <ratio>
 #include <chrono>
+#include <list>
+#include <functional>
+#include <deque>
 
 using std::cout;
 using std::cin;
@@ -23,9 +26,11 @@ using std::setw;
 using std::setfill;
 using std::left;
 using std::vector;
+using std::list;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration;
 using std::chrono::duration_cast;
 using std::chrono::time_point;
+using std::deque;
 
 #endif

@@ -1,7 +1,7 @@
 #include "functions.h"
 #include "libraries.h"
 
-void InsertYourself(vector <student> &A)
+void InsertYourself(list <student> &A)
 {
     cout << "Iveskite mokiniu skaiciu: ";
         int sk = InputInteger(1); 
@@ -48,13 +48,13 @@ void InsertYourself(vector <student> &A)
         }
 }
 
-void PrintData(vector <student> A)
+void PrintData(list <student> A)
 {
         int num = 0; int num2 = 20; bool co = true;
         num = GetLongestString(A) + 7;
 
-        Sort_by_FirstName(A);
-       
+        A.sort(Compare_by_FirstName);
+
         cout << endl;
         cout<< left << setfill(' ') << setw(num) << "Pavarde";
         cout<< left << setfill(' ') << setw(num) << "Vardas";
@@ -104,58 +104,24 @@ void PrintData(vector <student> A)
         if (co == false) cout <<"It seems you have written wrong data. Please check again your data file" << endl;
 }
 
-void PrintData_toFile(vector <student> &A)
+
+void GroupStudents(list <student> &A)
 {
-    
-    std::ofstream write("GeneratedLists/List2/temp.txt");
-    
-    int num = 15;
-    int num2 = 20;
-    int num3 = 5;
 
-    write << left << setfill(' ') << setw(num) << "Pavarde";
-    write << left << setfill(' ') << setw(num) << "Vardas";
-    write << left << setfill(' ') << setw(num3) << "ND1";
-    write << left << setfill(' ') << setw(num3) << "ND2";
-    write << left << setfill(' ') << setw(num3) << "ND3";
-    write << left << setfill(' ') << setw(num3) << "ND4";
-    write << left << setfill(' ') << setw(num3) << "ND5";
-    write << left << setfill(' ') << setw(7) << "EGZ";
-    write << left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
-    write << left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
+    list<student> ne_kieti;
+    list <student> kieti;
 
-    const std::string bruksnys(num*4+num3*5+14,'_');
-    write << bruksnys << endl;
-
-    for(auto &i : A)
+    for(auto &l : A)
     {
-        write << left << setfill(' ')<< setw(num) << i.LastName;
-        write << left << setfill(' ')<< setw(num) << i.FirstName;
-        for (int j=0; j<5; j++)
-        {
-             write << left << setfill(' ') << setw(num3) << i.nd[j];
-        }
-        write << std::fixed;
-        write << left << setfill(' ') << setw(7) << i.egz;
-        write << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
-        write << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
-        write << endl;  
-    }
-    write.close();
-}
-
-void GroupStudents(vector <student> &A)
-{
-    for(auto &i : A)
-    {
-        if (i.Finale_suVidurkiu() >= 5) i.Group = true;
-        else i.Group = false;
+        if(l.Finale_suVidurkiu() >= 5) kieti.push_back(l);
+        else if(l.Finale_suVidurkiu() < 5) ne_kieti.push_back(l);
     }
 
-    Sort_by_Results(A);
+    ne_kieti.sort(Compare_by_Results);
+    kieti.sort(Compare_by_Results);
 
-    std::ofstream write1("GeneratedLists/List2/kietiakai.txt");
-    std::ofstream write2("GeneratedLists/List2/vargsiukai.txt");
+    std::ofstream write1("GeneratedLists/List5/kietiakai.txt");
+    std::ofstream write2("GeneratedLists/List5/vargsiukai.txt");
   
     int num = 15;
     int num2 = 20;
@@ -187,45 +153,45 @@ void GroupStudents(vector <student> &A)
     write1 << bruksnys << endl;
     write2 << bruksnys << endl;
 
-    for(auto &i : A)
+    for(auto &u : kieti)
     {
-        if (i.Group == true)
+        write1 << left << setfill(' ')<< setw(num) << u.LastName;
+        write1 << left << setfill(' ')<< setw(num) << u.FirstName;
+        for (int j=0; j<5; j++)
         {
-            write1 << left << setfill(' ')<< setw(num) << i.LastName;
-            write1 << left << setfill(' ')<< setw(num) << i.FirstName;
-            for (int j=0; j<5; j++)
-            {
-                write1 << left << setfill(' ') << setw(num3) << i.nd[j];
-            }
-            write1 << std::fixed;
-            write1 << left << setfill(' ') << setw(7) <<i.egz;
-            write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
-            write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
-            write1 << endl; 
+            write1 << left << setfill(' ') << setw(num3) << u.nd[j];
         }
-        else if (i.Group == false)
-        {
-            write2 << left << setfill(' ')<< setw(num) << i.LastName;
-            write2 << left << setfill(' ')<< setw(num) << i.FirstName;
-            for (int j=0; j<5; j++)
-            {
-                write2 << left << setfill(' ') << setw(num3) << i.nd[j];
-            }
-            write2 << std::fixed;
-            write2 << left << setfill(' ') << setw(7) <<i.egz;
-            write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
-            write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
-            write2 << endl; 
-        }
+        write1 << std::fixed;
+        write1 << left << setfill(' ') << setw(7) << u.egz;
+        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_suVidurkiu();
+        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_suMediana();
+        write1 << endl; 
     }
+
+
+    for(auto &i : ne_kieti)
+    {
+        write2 << left << setfill(' ')<< setw(num) << i.LastName;
+        write2 << left << setfill(' ')<< setw(num) << i.FirstName;
+        for (int j=0; j < 5; j++)
+        {
+            write2 << left << setfill(' ') << setw(num3) << i.nd[j];
+        }
+        write2 << std::fixed;
+        write2 << left << setfill(' ') << setw(7) << i.egz;
+        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
+        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+        write2 << endl; 
+    }
+
     write1.close();
     write2.close();
 }
 
 
-void ReadFromFile(vector <student> &A)
+void ReadFromFile(list <student> &A)
 {
-    std::ifstream read("GeneratedLists/List2/Full_list.txt");
+    std::ifstream read("GeneratedLists/List5/Full_list.txt");
 
     if(!read)
 	{
@@ -237,6 +203,7 @@ void ReadFromFile(vector <student> &A)
 
     int inputNd;
     student z;
+
     while(!read.eof())
     {
         z.nd.clear();
@@ -256,11 +223,10 @@ void ReadFromFile(vector <student> &A)
     read.close();
 }
 
-
 void GenerateList()
 {
     std::srand (std::time(NULL));
-    int NR = 100;
+    int NR = 10;
 
     std::ofstream write("GeneratedLists/List2/Full_list.txt");
     
@@ -274,9 +240,7 @@ void GenerateList()
     write << left << setfill(' ') << setw(num3) << "ND4";
     write << left << setfill(' ') << setw(num3) << "ND5";
     write << left << setfill(' ') << setw(8) << "EGZ" << endl;
-    //write << left << setfill(' ') << setw(num2) << "Galutinis (Vid.)";
-    //write << left << setfill(' ') << setw(num2) << "Galutinis (Med.)" << endl; 
-     
+
     const std::string bruksnys(num*2+num3*5+3.5,'_');
     write << bruksnys;
 
@@ -303,7 +267,7 @@ void GenerateList()
 }
 
 
-void InsertFromFile(vector <student> &A)
+void InsertFromFile(list <student> &A)
 {
     std::ifstream read("data/kursiokai.txt");
      
@@ -359,6 +323,3 @@ void InsertFromFile(vector <student> &A)
     }
     read.close();
 }
-
-
-

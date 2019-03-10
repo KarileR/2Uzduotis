@@ -12,7 +12,7 @@ int main ()
     t1 = high_resolution_clock::now();
 
     int MainChoice;
-    vector <student> A;
+    list <student> A;
     MENU(MainChoice,A,t2,t3);
 
     t4 = high_resolution_clock::now();

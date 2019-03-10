@@ -1,7 +1,7 @@
 #include "functions.h"
 #include "libraries.h"
 
-void MENU(int &MainChoice, vector <student> &A, high_resolution_clock::time_point &t2, high_resolution_clock::time_point &t3)
+void MENU(int &MainChoice, list <student> &A, high_resolution_clock::time_point &t2, high_resolution_clock::time_point &t3)
 {
     cout << endl;
     cout << "Paspausti atitinkamus skaicius, jeigu norite:" << endl << endl;
@@ -23,7 +23,7 @@ void MENU(int &MainChoice, vector <student> &A, high_resolution_clock::time_poin
     }       
     else if (MainChoice == 2) 
     {
-        GenerateList();
+        //GenerateList();
         ReadFromFile(A);
         GroupStudents(A);
     }
