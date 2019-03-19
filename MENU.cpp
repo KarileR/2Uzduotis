@@ -1,7 +1,8 @@
 #include "functions.h"
 #include "libraries.h"
+//#include "Globals.h"
 
-
+extern std::string ListNR;
 extern high_resolution_clock::time_point t3;
 extern high_resolution_clock::time_point t4;
 extern high_resolution_clock::time_point t5;
@@ -27,13 +28,13 @@ void MENU(int &MainChoice, list <student> &A)
     }       
     else if (MainChoice == 2) 
     {
-        //cout << "Kiek norite sugeneruoti studentu? "; 
+        cout << "Kiek norite sugeneruoti studentu? "; 
 
-        //t5 = high_resolution_clock::now();
-        //int StudSk = InputInteger(1);
-        //t6 = high_resolution_clock::now();
+        t5 = high_resolution_clock::now();
+        int StudSk = InputInteger(1);
+        t6 = high_resolution_clock::now();
 
-        //GenerateList(StudSk);
+        GenerateList(StudSk);
         ReadFromFile(A);
         GroupStudents(A);
     }

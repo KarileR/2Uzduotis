@@ -1,10 +1,8 @@
 #include "functions.h"
 #include "libraries.h"
 
-
 int InputInteger(int choose) //Inputs and validates integer
 {
-
     if (choose == 1)   //Turi buti ivedamas teigiamas skaicius
     {
         int a;
@@ -31,7 +29,7 @@ int InputInteger(int choose) //Inputs and validates integer
         return a;
     }
 
-    if (choose == 2) //Turi buti ivedamas skaicius tarp 1 ir 10
+    else if (choose == 2) //Turi buti ivedamas skaicius tarp 1 ir 10
     {
         int a;
         cin >> a;
@@ -43,7 +41,6 @@ int InputInteger(int choose) //Inputs and validates integer
                 try
                 {
                     if (std::cin.fail()) throw std::runtime_error("Input is not an integer\n");
-
                 }
                 catch (...)
                 {

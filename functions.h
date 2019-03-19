@@ -2,7 +2,6 @@
 #define FUNCTIONS_H
 #include "libraries.h"
 
-
 struct student
 {
     std::string FirstName;
@@ -10,15 +9,17 @@ struct student
     int egz, Med_ar_Vid;
     vector <int> nd;
     bool CorrectData = true;
+    double Finale_Vidurkis;
+    double Finale_Mediana;
 
     double Finale_suVidurkiu () const
     {
-        double s = 0;
+        double s = 0, avr=0;
         for (int i=0; i < nd.size(); i++)
         {
             s = s + nd[i];
         }
-        double avr = s/nd.size();
+        avr = s/nd.size();
         return 0.4 * avr + 0.6 * egz;
     }
 
@@ -61,4 +62,5 @@ void GroupStudents(list <student> &A);
 bool is_file_exist(std::string fileName);
 
 void Time (int &MainChoice);
+
 #endif

@@ -1,7 +1,8 @@
 #include "functions.h"
 #include "libraries.h"
+#include "Globals.h"
 
-std::string ListNR = "List5";
+extern std::string ListNR;
 
 extern high_resolution_clock::time_point t1;
 extern high_resolution_clock::time_point t2;
@@ -44,12 +45,13 @@ void InsertYourself(list <student> &A)
                     j++;
                 }
             }
-
             cout << "Egzamino rezultatai: ";
             z.egz = InputInteger(2);
             cout << endl;
             cout << "Pasirinkite skaiciuoti su mediana (1), vidurkiu (2), arba su abiem (3): ";
             z.Med_ar_Vid = Choose(3);
+            z.Finale_Vidurkis = z.Finale_suVidurkiu();
+            z.Finale_Mediana = z.Finale_suMediana();
             cout << endl;
             cout << endl;
             A.push_back(z);
@@ -81,14 +83,14 @@ void PrintData(list <student> A)
                 if(i.Med_ar_Vid == 3)  //Spausdina ir ta, ir ta
                 {
                     cout << std::fixed;
-                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
-                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_Vidurkis;
+                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_Mediana;
                 }
 
                 else if(i.Med_ar_Vid == 2) //Spausdina tik su vidurkiu
                 {
                     cout << std::fixed;
-                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
+                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_Vidurkis;
                 }
 
                 else if (i.Med_ar_Vid == 1) //Spausdina tik su mediana
@@ -96,7 +98,7 @@ void PrintData(list <student> A)
                     cout << std::fixed;
                     cout << "                    ";
                     cout << left << setfill(' ')<< setw(num2);
-                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+                    cout << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_Mediana;
                 }
             }
 
@@ -115,20 +117,19 @@ void PrintData(list <student> A)
 
 void GroupStudents(list <student> &A)
 {
-
+    A.sort(Compare_by_Results);
+    
     list <student> ne_kieti;
     list <student> kieti;
 
     for(auto &l : A)
     {
-        if(l.Finale_suVidurkiu() >= 5) kieti.push_back(l);
-        else if(l.Finale_suVidurkiu() < 5) ne_kieti.push_back(l);
+        if(l.Finale_Vidurkis >= 5) kieti.push_back(l);
+        else if(l.Finale_Vidurkis < 5) ne_kieti.push_back(l);
     }
 
-    
-
-    ne_kieti.sort(Compare_by_Results);
-    kieti.sort(Compare_by_Results);
+    //ne_kieti.sort(Compare_by_Results);
+    //kieti.sort(Compare_by_Results);
 
     std::ofstream write1("GeneratedLists/" + ListNR + "/kietiakai.txt");
     std::ofstream write2("GeneratedLists/" + ListNR + "/vargsiukai.txt");
@@ -173,8 +174,8 @@ void GroupStudents(list <student> &A)
         }
         write1 << std::fixed;
         write1 << left << setfill(' ') << setw(7) << u.egz;
-        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_suVidurkiu();
-        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_suMediana();
+        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_suVidurkiu;
+        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_suMediana;
         write1 << endl; 
     }
 
@@ -189,8 +190,8 @@ void GroupStudents(list <student> &A)
         }
         write2 << std::fixed;
         write2 << left << setfill(' ') << setw(7) << i.egz;
-        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu();
-        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana();
+        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu;
+        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana;
         write2 << endl; 
     }
 
@@ -228,6 +229,8 @@ void ReadFromFile(list <student> &A)
         }
         read >> z.egz;
         z.Med_ar_Vid = 3;
+        z.Finale_Vidurkis = z.Finale_suVidurkiu();
+        z.Finale_Mediana = z.Finale_suMediana();
         A.push_back(z);
     }
     A.pop_back();
