@@ -1,6 +1,15 @@
 #include "functions.h"
 #include "libraries.h"
 
+std::string ListNR = "List5";
+
+extern high_resolution_clock::time_point t1;
+extern high_resolution_clock::time_point t2;
+extern high_resolution_clock::time_point t3;
+extern high_resolution_clock::time_point t4;
+extern high_resolution_clock::time_point t5;
+extern high_resolution_clock::time_point t6;
+
 void InsertYourself(list <student> &A)
 {
     cout << "Iveskite mokiniu skaiciu: ";
@@ -19,7 +28,6 @@ void InsertYourself(list <student> &A)
             cout << "Pavarde: ";
             cin >> z.LastName;
             cout << endl;
-            
     
             cout << "Pradekite vesti mokinio pazymius. Kai baigsite iveskite 0. " << endl;
             int j=1;
@@ -108,7 +116,7 @@ void PrintData(list <student> A)
 void GroupStudents(list <student> &A)
 {
 
-    list<student> ne_kieti;
+    list <student> ne_kieti;
     list <student> kieti;
 
     for(auto &l : A)
@@ -117,11 +125,13 @@ void GroupStudents(list <student> &A)
         else if(l.Finale_suVidurkiu() < 5) ne_kieti.push_back(l);
     }
 
+    
+
     ne_kieti.sort(Compare_by_Results);
     kieti.sort(Compare_by_Results);
 
-    std::ofstream write1("GeneratedLists/List5/kietiakai.txt");
-    std::ofstream write2("GeneratedLists/List5/vargsiukai.txt");
+    std::ofstream write1("GeneratedLists/" + ListNR + "/kietiakai.txt");
+    std::ofstream write2("GeneratedLists/" + ListNR + "/vargsiukai.txt");
   
     int num = 15;
     int num2 = 20;
@@ -191,7 +201,8 @@ void GroupStudents(list <student> &A)
 
 void ReadFromFile(list <student> &A)
 {
-    std::ifstream read("GeneratedLists/List5/Full_list.txt");
+
+    std::ifstream read("GeneratedLists/" + ListNR + "/Full_list.txt");
 
     if(!read)
 	{
@@ -223,12 +234,37 @@ void ReadFromFile(list <student> &A)
     read.close();
 }
 
-void GenerateList()
+
+void GenerateList(int StudSK)
 {
     std::srand (std::time(NULL));
-    int NR = 10;
 
-    std::ofstream write("GeneratedLists/List2/Full_list.txt");
+    int NR = 1;
+    
+    while (true)
+    {
+        std::string t = std::to_string(NR);
+
+        std::ifstream check("GeneratedLists/List" + t + "/Full_list.txt");
+        if(check)
+        {
+            check.close();
+            NR++;
+        }
+        if(!check)
+        {
+            check.close();
+            break;
+        }
+    }
+
+    std::string k = std::to_string(NR);
+    ListNR = "List" + k;
+
+    string fullDir = "GeneratedLists/List" + k;
+    CreateDirectoryA(fullDir.c_str(), NULL);
+
+    std::ofstream write("GeneratedLists/"+ ListNR +"/Full_list.txt");
     
     int num = 15; int num2 = 20; int num3 = 5;
 
@@ -244,7 +280,7 @@ void GenerateList()
     const std::string bruksnys(num*2+num3*5+3.5,'_');
     write << bruksnys;
 
-    for(int i=0; i<NR; i++)
+    for(int i=0; i<StudSK; i++)
     {  
         write << endl;
         std::string sk = std::to_string(i+1);
@@ -322,4 +358,23 @@ void InsertFromFile(list <student> &A)
         A.push_back(z);
     }
     read.close();
+}
+
+void Time(int &MainChoice)
+{
+    duration <double> time1 = t2 - t1;
+    duration <double> time2 = t4 - t3;
+    duration <double> time3 = t6 - t5;
+    
+    if (MainChoice == 2)
+    {
+        std::ofstream of("GeneratedLists/" + ListNR + "/time.txt");
+        of << std::fixed << std::setprecision(6) << time1.count() - time2.count() - time3.count() << " s" << endl;
+        cout << "Sugeneruoti failai issaugoti: GeneratedLists/" << ListNR;
+    }
+    else if(MainChoice == 1)
+    {
+        cout << endl << endl;
+        cout << std::fixed << std::setprecision(6) << time1.count() - time2.count() << " s" << endl;
+    }
 }

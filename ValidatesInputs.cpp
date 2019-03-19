@@ -61,7 +61,7 @@ int InputInteger(int choose) //Inputs and validates integer
 
 int Choose(int choose)  //Inputs and validates integer (user's choice)
 {
-    if (choose == 2)
+    if (choose == 2)  //Choose 1 or 2
     {
         int a;
         cin >> a;
@@ -86,7 +86,7 @@ int Choose(int choose)  //Inputs and validates integer (user's choice)
         return a;
     }
 
-    else if (choose == 3)
+    else if (choose == 3) //Choose 1 or 2 or 3
     {
         int a;
         cin >> a;
