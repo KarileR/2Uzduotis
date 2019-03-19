@@ -18,6 +18,8 @@
 #include <list>
 #include <functional>
 #include <deque>
+#include <windows.h>
+#include <direct.h>
 
 using std::cout;
 using std::cin;
@@ -27,6 +29,7 @@ using std::setfill;
 using std::left;
 using std::vector;
 using std::list;
+using std::string;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration;
 using std::chrono::duration_cast;
