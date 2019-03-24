@@ -1,5 +1,13 @@
 # 2Uzduotis
 
+__Programos naudojimosi instrukcija__
+- Pirmame lange išmetamas MENU, kuriame galima pasirinkti vieną iš trijų variantų:
+- Pirma: Apdoroti duomenis iš tekstinio failo, kuriame Jūs surašote duomenis (/data/kursiokai.txt)
+- Antra: Leisti kompiuteriui sugeneruoti atsitiktinį studentų sąrašą
+- Trečia: Pasirinkti įvesti duomenis ranka programos veikimo metu
+- Po kiekvieno pasirinkimo sekate nurodymus, ką reikia daryti toliau. Jei išmeta klaidą,  ji bus aprašyta, kodėl taip įvyko
+
+
 # v1.0
 __Prideta:__
 - Išmatuota programos veikimo sparta priklausomai nuo studentų dalijimo į tris kategorijas strategijų
