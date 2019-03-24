@@ -1,5 +1,32 @@
 # 2Uzduotis
 
+# v1.0
+__Prideta:__
+- Išmatuota programos veikimo sparta priklausomai nuo studentų dalijimo į tris kategorijas strategijų
+
+__Koreguota:__
+- Pataisyta klaida, kai ir į vargšiukų ir kietiakų failą ismešdavo, kurie surinko 5.00 vidurkį.
+- Nebeužlūžta prorgama esant 100000 studentų, naudojant deque konteinerį
+- Pridėtas CMakeLists.txt failas (cmake)
+
+__Spartos analize:__
+
+__1 strategija:__
+
+Bendro "student" konteinerio skaidymas į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". 
+
+| Konteineris | std::vector <>  | std::list <> | std::deque <> |
+| --- | --- | --- | --- |
+| 1 |  1.142447 s    |  1.124414 s     |  1.129205 s    |
+| 2 |  1.114925 s    |  1.128864 s     |  1.111133 s    |
+| 3 |  1.170952 s    |  1.197329 s     |  1.182502 s    |
+| 4 |  1.686749 s    |  1.490520 s     |  1.703526 s    |
+| 5 |  13.051815 s   |  3.442267 s     |  13.666179 s   |
+
+__2 strategija:__
+
+Bendro "student" konteinerio skaidymas panaudojant tik vieną naują konteinerį - "vargšiukai".
+
 # v0.5
  
 __Prideta:__
