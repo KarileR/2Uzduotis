@@ -1,11 +1,11 @@
 # 2Uzduotis
 
 __Programos naudojimosi instrukcija__
-- Pirmame lange išmetamas MENU, kuriame galima pasirinkti vieną iš trijų variantų:
-- Pirma: Apdoroti duomenis iš tekstinio failo, kuriame Jūs surašote duomenis (/data/kursiokai.txt)
-- Antra: Leisti kompiuteriui sugeneruoti atsitiktinį studentų sąrašą
-- Trečia: Pasirinkti įvesti duomenis ranka programos veikimo metu
-- Po kiekvieno pasirinkimo sekate nurodymus, ką reikia daryti toliau. Jei išmeta klaidą,  ji bus aprašyta, kodėl taip įvyko
+1. Pirmame lange išmetamas MENU, kuriame galima pasirinkti vieną iš trijų variantų:
+    - Pirma: Apdoroti duomenis iš tekstinio failo, kuriame Jūs surašote duomenis (/data/kursiokai.txt)
+    - Antra: Leisti kompiuteriui sugeneruoti atsitiktinį studentų sąrašą
+    - Trečia: Pasirinkti įvesti duomenis ranka programos veikimo metu
+2. Po kiekvieno pasirinkimo sekate nurodymus, ką reikia daryti toliau. Jei išmeta klaidą,  ji bus aprašyta, kodėl taip įvyko
 
 
 # v1.0
@@ -87,3 +87,28 @@ __Spartos analize:__
 | 1000 |  1.224044 s   |  
 | 10000 |   1.640982 s    |  
 | 100000 |  13.275929 s  | 
+
+ # v0.3
+ 
+ __Pridėta:__
+ 
+ - Funkcijas, naujus duomenų tipus (struct’ūras) perkelkltos į antraštinius "header" failus
+ - Minimaliai panaudotas išimčių valdymas (angl. Exception Handling)
+ 
+
+ # v0.2
+ 
+ __Pridėta:__
+ 
+- Galima duomenis ne tik įvesti bet ir nuskaityti iš failo
+- Studentai surūšiuojami pagal vardus ir visi stulpeliai gražiai "išlygiuoti"
+
+
+# v0.1
+ 
+- Parašyta programa, kuri nuskaito studentų duomenis: vardą, pavardę, atliktų namų darbų rezultatus ir egzamino rezultatą
+- Tuomet iš šių duomenų, suskaičiuoja galutinį studento balą
+- Žmogus gali pasirinkti kaip skaičiuoti galutnį balą: pasitelkiant viurkį arba medianą
+- Yra galimybė pasirinkti, jog mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai
+ 
+ 
