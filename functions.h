@@ -39,21 +39,22 @@ struct student
         }
         return 0.4 * s + 0.6 * egz;
     } 
-   
+  
 };
 
+bool Ar_Islaike (student &a);
 bool Compare_by_Results(const student &a, const student &b);
 bool Compare_by_FirstName(const student &a, const student &b);
-void InsertYourself(vector <student> &A);
-void InsertFromFile(vector <student> &A);
-void ReadFromFile(vector <student> &A);
-void MENU (int &MainChoice,vector <student> &A);
+void InsertYourself(list <student> &A);
+void InsertFromFile(list <student> &A);
+void ReadFromFile(list <student> &A);
+void MENU (int &MainChoice,list <student> &A);
 void GenerateList(int StudSK);
 int Choose(int choose);
-int GetLongestString(vector <student> &A);
+int GetLongestString(list <student> &A);
 int InputInteger(int choose);
-void PrintData(vector <student> A);
-void GroupStudents(vector <student> &A);
+void PrintData(list <student> A);
+void GroupStudents(list <student> &A);
 bool is_file_exist(std::string fileName);
 
 void Time (int &MainChoice);

@@ -20,7 +20,12 @@ bool Compare_by_Results(const student &a, const student &b)
     return a.Finale_Vidurkis > b.Finale_Vidurkis;
 }
 
-int GetLongestString(vector <student> &A) 
+bool Ar_Islaike (student &a) 
+{
+    return (a.Finale_Vidurkis >= 5);
+}
+
+int GetLongestString(list <student> &A) 
 {
     int ln=0, max=0;
     for(auto &i: A)
@@ -40,7 +45,7 @@ void Time(int &MainChoice)
 {
     duration <double> time1 = t2 - t1;
     duration <double> time2 = t4 - t3;
-    //duration <double> time3 = t6 - t5;
+    duration <double> time3 = t6 - t5;
     
     if (MainChoice == 2)
     {

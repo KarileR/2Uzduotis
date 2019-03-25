@@ -11,7 +11,7 @@ extern high_resolution_clock::time_point t4;
 extern high_resolution_clock::time_point t5;
 extern high_resolution_clock::time_point t6;
 
-void InsertYourself(vector <student> &A)
+void InsertYourself(list <student> &A)
 {
     cout << "Iveskite mokiniu skaiciu: ";
         int sk = InputInteger(1); 
@@ -58,13 +58,13 @@ void InsertYourself(vector <student> &A)
         }
 }
 
-void PrintData(vector <student> A)
+void PrintData(list <student> A)
 {
         int num = 0; int num2 = 20; bool co = true;
         num = GetLongestString(A) + 7;
 
-        //A.sort(Compare_by_FirstName);
-        std::sort(A.begin(), A.end(), Compare_by_FirstName);
+        A.sort(Compare_by_FirstName);
+        //std::sort(A.begin(), A.end(), Compare_by_FirstName);
 
         cout << endl;
         cout<< left << setfill(' ') << setw(num) << "Pavarde";
@@ -115,23 +115,14 @@ void PrintData(vector <student> A)
         if (co == false) cout <<"It seems you have written wrong data. Please check again your data file" << endl;
 }
 
-vector <student> SortByMarks(vector <student> &A) 
+void GroupStudents(list <student> &A)
 {
-    vector <student>::iterator it;
-    it = std::stable_partition (A.begin(), A.end(), Compare_by_Results);
-    vector <student> weak (it, A.end());
-    A.erase(it, A.end());
-    
-    return weak;
-}
-
-
-void GroupStudents(vector <student> &A)
-{
-    //A.sort(Compare_by_Results);
+    A.sort(Compare_by_Results);
     //std::sort(A.begin(), A.end(), Compare_by_Results);
 
-    vector <student> Weak = SortByMarks(A);
+    list <student>::iterator it = std::stable_partition (A.begin(), A.end(), Ar_Islaike);
+    list <student> Weak (it, A.end());
+    A.erase(it, A.end());
 
     std::ofstream write1("GeneratedLists/" + ListNR + "/kietiakai.txt");
     std::ofstream write2("GeneratedLists/" + ListNR + "/vargsiukai.txt");
@@ -202,7 +193,7 @@ void GroupStudents(vector <student> &A)
 }
 
 
-void ReadFromFile(vector <student> &A)
+void ReadFromFile(list <student> &A)
 {
 
     std::ifstream read("GeneratedLists/" + ListNR + "/Full_list.txt");
@@ -308,7 +299,7 @@ void GenerateList(int StudSK)
 }
 
 
-void InsertFromFile(vector <student> &A)
+void InsertFromFile(list <student> &A)
 {
     std::ifstream read("data/kursiokai.txt");
      

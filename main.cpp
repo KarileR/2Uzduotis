@@ -6,12 +6,11 @@ extern high_resolution_clock::time_point t2;
 
 int main ()
 {
-
     t1 = high_resolution_clock::now();
 
     int MainChoice;
     list <student> A;
-    MENU(MainChoice,A);
+    MENU(MainChoice, A);
 
     t2 = high_resolution_clock::now();
 

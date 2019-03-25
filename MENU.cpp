@@ -1,8 +1,7 @@
 #include "functions.h"
 #include "libraries.h"
-//#include "Globals.h"
 
-extern std::string ListNR;
+extern string ListNR;
 extern high_resolution_clock::time_point t3;
 extern high_resolution_clock::time_point t4;
 extern high_resolution_clock::time_point t5;
