@@ -92,7 +92,7 @@ __Spartos analize:__
  
  __Pridėta:__
  
- - Funkcijas, naujus duomenų tipus (struct’ūras) perkelkltos į antraštinius "header" failus
+ - Funkcijos, nauji duomenų tipai (struct’ūros) perkelkltos į antraštinius "header" failus
  - Minimaliai panaudotas išimčių valdymas (angl. Exception Handling)
  
 
