@@ -10,7 +10,7 @@ __Programos naudojimosi instrukcija__
 
 # v1.0
 __Pridėta:__
-- Išmatuota programos veikimo sparta priklausomai nuo studentų dalijimo į tris kategorijas strategijų
+- Išmatuota programos veikimo sparta priklausomai nuo studentų dalijimo į dvi kategorijas strategijų
 
 __Koreguota:__
 - Pataisyta klaida, kai ir į vargšiukų ir kietiakų failą ismešdavo, kurie surinko 5.00 vidurkį.
