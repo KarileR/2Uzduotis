@@ -20,6 +20,7 @@
 #include <deque>
 #include <windows.h>
 #include <direct.h>
+#include <iterator> 
 
 using std::cout;
 using std::cin;

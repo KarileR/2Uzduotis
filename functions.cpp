@@ -11,7 +11,7 @@ extern high_resolution_clock::time_point t4;
 extern high_resolution_clock::time_point t5;
 extern high_resolution_clock::time_point t6;
 
-void InsertYourself(list <student> &A)
+void InsertYourself(vector <student> &A)
 {
     cout << "Iveskite mokiniu skaiciu: ";
         int sk = InputInteger(1); 
@@ -58,12 +58,13 @@ void InsertYourself(list <student> &A)
         }
 }
 
-void PrintData(list <student> A)
+void PrintData(vector <student> A)
 {
         int num = 0; int num2 = 20; bool co = true;
         num = GetLongestString(A) + 7;
 
-        A.sort(Compare_by_FirstName);
+        //A.sort(Compare_by_FirstName);
+        std::sort(A.begin(), A.end(), Compare_by_FirstName);
 
         cout << endl;
         cout<< left << setfill(' ') << setw(num) << "Pavarde";
@@ -114,22 +115,23 @@ void PrintData(list <student> A)
         if (co == false) cout <<"It seems you have written wrong data. Please check again your data file" << endl;
 }
 
-
-void GroupStudents(list <student> &A)
+vector <student> SortByMarks(vector <student> &A) 
 {
-    A.sort(Compare_by_Results);
+    vector <student>::iterator it;
+    it = std::stable_partition (A.begin(), A.end(), Compare_by_Results);
+    vector <student> weak (it, A.end());
+    A.erase(it, A.end());
     
-    list <student> ne_kieti;
-    list <student> kieti;
+    return weak;
+}
 
-    for(auto &l : A)
-    {
-        if(l.Finale_Vidurkis >= 5) kieti.push_back(l);
-        else if(l.Finale_Vidurkis < 5) ne_kieti.push_back(l);
-    }
 
-    //ne_kieti.sort(Compare_by_Results);
-    //kieti.sort(Compare_by_Results);
+void GroupStudents(vector <student> &A)
+{
+    //A.sort(Compare_by_Results);
+    //std::sort(A.begin(), A.end(), Compare_by_Results);
+
+    vector <student> Weak = SortByMarks(A);
 
     std::ofstream write1("GeneratedLists/" + ListNR + "/kietiakai.txt");
     std::ofstream write2("GeneratedLists/" + ListNR + "/vargsiukai.txt");
@@ -164,7 +166,7 @@ void GroupStudents(list <student> &A)
     write1 << bruksnys << endl;
     write2 << bruksnys << endl;
 
-    for(auto &u : kieti)
+    for(auto &u : A)
     {
         write1 << left << setfill(' ')<< setw(num) << u.LastName;
         write1 << left << setfill(' ')<< setw(num) << u.FirstName;
@@ -174,13 +176,13 @@ void GroupStudents(list <student> &A)
         }
         write1 << std::fixed;
         write1 << left << setfill(' ') << setw(7) << u.egz;
-        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_suVidurkiu;
-        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_suMediana;
+        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_Vidurkis;
+        write1 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << u.Finale_Mediana;
         write1 << endl; 
     }
 
 
-    for(auto &i : ne_kieti)
+    for(auto &i : Weak)
     {
         write2 << left << setfill(' ')<< setw(num) << i.LastName;
         write2 << left << setfill(' ')<< setw(num) << i.FirstName;
@@ -190,8 +192,8 @@ void GroupStudents(list <student> &A)
         }
         write2 << std::fixed;
         write2 << left << setfill(' ') << setw(7) << i.egz;
-        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suVidurkiu;
-        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_suMediana;
+        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_Vidurkis;
+        write2 << left << setfill(' ')<< setw(num2) << std::setprecision(2) << i.Finale_Mediana;
         write2 << endl; 
     }
 
@@ -200,7 +202,7 @@ void GroupStudents(list <student> &A)
 }
 
 
-void ReadFromFile(list <student> &A)
+void ReadFromFile(vector <student> &A)
 {
 
     std::ifstream read("GeneratedLists/" + ListNR + "/Full_list.txt");
@@ -306,7 +308,7 @@ void GenerateList(int StudSK)
 }
 
 
-void InsertFromFile(list <student> &A)
+void InsertFromFile(vector <student> &A)
 {
     std::ifstream read("data/kursiokai.txt");
      
@@ -358,26 +360,9 @@ void InsertFromFile(list <student> &A)
 
         if (CorrectEGZ == false || CorrectND == false) z.CorrectData = false;
         else z.CorrectData = true;
+        z.Finale_Vidurkis = z.Finale_suVidurkiu();
+        z.Finale_Mediana = z.Finale_suMediana();
         A.push_back(z);
     }
     read.close();
-}
-
-void Time(int &MainChoice)
-{
-    duration <double> time1 = t2 - t1;
-    duration <double> time2 = t4 - t3;
-    duration <double> time3 = t6 - t5;
-    
-    if (MainChoice == 2)
-    {
-        std::ofstream of("GeneratedLists/" + ListNR + "/time.txt");
-        of << std::fixed << std::setprecision(6) << time1.count() - time2.count() - time3.count() << " s" << endl;
-        cout << "Sugeneruoti failai issaugoti: GeneratedLists/" << ListNR;
-    }
-    else if(MainChoice == 1)
-    {
-        cout << endl << endl;
-        cout << std::fixed << std::setprecision(6) << time1.count() - time2.count() << " s" << endl;
-    }
 }
